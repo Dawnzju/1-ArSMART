@@ -25,10 +25,10 @@ This is a simulator which enables basic NoC, SMART NoC and ArSMART NoC. This sim
             Network.py	(As multi-flits transmitting is not working yet)  
         --routing algorithm	GarnetNetwork.py	Set the value to 2 to enable the custom routing algorithm that follows timePoints.json	Use with --central  
             Network.py  
-        example: ./build/Garnet_standalone/gem5.debug configs/example/garnet_synth_traffic.py --network=garnet2.0 --num-cpus=64 --num-dirs=64 --topology=Mesh_XY --mesh-rows=8 --sim-cycles=1000000 --single-flit --synthetic=taskgraph --smart --smart_hpcmax=4 --filename=Example_Mesh8x8_AIR1_improved.json  
+        example: ./build/Garnet_standalone/gem5.debug configs/example/garnet_synth_traffic.py --network=garnet2.0 --num-cpus=64 --num-dirs=64 --topology=Mesh_XY --mesh-rows=8 --sim-cycles=1000000 --single-flit --synthetic=taskgraph --smart --smart_hpcmax=4 --filename=./autocor_Mesh8X8_AIR1_XY.json  
 > 4. For ArSMART NoC:  
-        please read this paper:   
+        please read this paper:  https://ieeexplore.ieee.org/abstract/document/9464312  
         --central	GarnetNetwork.py	Enable the bypass at routers for the ArSMART	Use with --routing-algorithm=2  
             Network.py  
         --debug-flags=GarnetSyntheticTraffic   Print debug information   
-        example: ./build/Garnet_standalone/gem5.debug --debug-flags=GarnetSyntheticTraffic configs/example/garnet_synth_traffic.py --network=garnet2.0 --num-cpus=64 --num-dirs=64 --smart_hpcmax=8 --topology=Mesh_XY --mesh-rows=8 --sim-cycles=1000000 --single-flit --synthetic=taskgraph --central --filename=Example_Mesh8x8_AIR1_improved.json  
+        example: ./build/Garnet_standalone/gem5.debug --debug-flags=GarnetSyntheticTraffic configs/example/garnet_synth_traffic.py --network=garnet2.0 --num-cpus=64 --num-dirs=64 --smart_hpcmax=8 --topology=Mesh_XY --mesh-rows=8 --sim-cycles=1000000 --single-flit --synthetic=taskgraph --central --filename=./autocor_Mesh8X8_AIR1_XY.json 
