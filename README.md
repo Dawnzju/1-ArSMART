@@ -1,7 +1,8 @@
-#1-Gem5-Updated  
-This is a simulator which enables basic NoC, SMART NoC and ArSMART NoC. This simulator is developed based on gem5. The main website can be found at http://www.gem5.org.  
+# 1-Gem5-Updated   
+
+    This is a simulator which enables basic NoC, SMART NoC and ArSMART NoC. This simulator is developed based on gem5. The main website can be found at http://www.gem5.org.  
 ---------------------------------------------------------------------------------
-# To install this simulator:  
+## To install this simulator:  
 * 1. Download gem5: https://github.com/Dawnzju/gem5 (This is the version I am working on. Recommanded since the patch can be easily applied)  
 * 2. Check the python version: Python 2.7.17 :: Anaconda, Inc. (conda activate py27)  
 * 3. Make sure the original gem5 can be compiled and executed.  
@@ -11,7 +12,7 @@ This is a simulator which enables basic NoC, SMART NoC and ArSMART NoC. This sim
 * 6. Apply this patch using command: git apply NoC.patch  
 * 7. Compile again: scons build/Garnet_standalone/gem5.debug -j25 NUMBER_BITS_PER_SET=256  
 ---------------------------------------------------------------------------------
-# To use this simulator:  
+## To use this simulator:  
 - 1. original traffic pattern for NoC are supported:  
         https://www.gem5.org/documentation/general_docs/ruby/garnet_synthetic_traffic/  
 - 2. Prepare the task graph file with mapping and routing information  
@@ -29,6 +30,7 @@ This is a simulator which enables basic NoC, SMART NoC and ArSMART NoC. This sim
     *  **--mesh-rows**  Mesh size
     *  **--synthetic** Synthetic traffic loads
     *  **--smart_hpcmax=8**  Number of hops can be traversed in one cycle 
+    *  **Example**: ./build/Garnet_standalone/gem5.debug --debug-flags=GarnetSyntheticTraffic configs/example/garnet_synth_traffic.py --network=garnet2.0 --num-cpus=64 --num-dirs=64 --topology=Mesh_XY --mesh-rows=8 --sim-cycles=1000000 --single-flit --synthetic=taskgraph --filename=Example_Mesh8x8_AIR1_improved.json  
     -  For SMART NoC:  
         *  **--smart** (GarnetNetwork.py/Network.py)  Enable SMART  
         *  **--smart2D** (GarnetNetwork.py/Network.py)  Enable SMART-2D	      
