@@ -1134,7 +1134,7 @@ index 7730463..74193b0 100644
      void gUpdates(ThreadID tid, Addr pc, bool taken, BranchInfo* bi,
          int64_t phist) override;
 diff --git a/src/cpu/testers/garnet_synthetic_traffic/GarnetSyntheticTraffic.cc b/src/cpu/testers/garnet_synthetic_traffic/GarnetSyntheticTraffic.cc
-index 5b542bc..896610b 100644
+index 5b542bc..1b332ef 100644
 --- a/src/cpu/testers/garnet_synthetic_traffic/GarnetSyntheticTraffic.cc
 +++ b/src/cpu/testers/garnet_synthetic_traffic/GarnetSyntheticTraffic.cc
 @@ -26,15 +26,22 @@
@@ -1297,7 +1297,7 @@ index 5b542bc..896610b 100644
      delete pkt;
  }
  
-@@ -145,44 +230,781 @@ GarnetSyntheticTraffic::tick()
+@@ -145,44 +230,787 @@ GarnetSyntheticTraffic::tick()
      if (++noResponseCycles >= responseLimit) {
          fatal("%s deadlocked at cycle %d\n", name(), curTick());
      }
@@ -1789,20 +1789,23 @@ index 5b542bc..896610b 100644
 +        cout<<"Hpcmax: "<<hpcMax<<endl;
 +        cout<<"Total trasmission time: "<<tranTotal<<endl;
 +        cout<<"Total Flit: "<<totalFlits<<endl;
-+        cout<<"Total energy: "<<totalEnergy<<endl;
-+        //cout<<"Communication latency: "<<latency<<endl;
-+        cout<<"Network throughput: "<< throughput<<endl;
-+        cout<<"Total direct: "<< totalDirect<<endl;
-+        cout<<"Total indirect: "<< totalinDirect<<endl;
-+        cout<<"Contention Time: "<<blockTime<<endl;
-+        cout<<"totalSmartArbEnergy: "<<totalSmartArbEnergy<<endl;
-+        cout<<"totalSmartBufferEnergy: "<<totalSmartBufferEnergy<<endl;
-+        cout<<"totalTransEnergy: "<<totalTransEnergy<<endl;
-+        cout<<"totalBufferEnergy: "<<totalBufferEnergy<<endl;
-+        cout<<"totalArbEnergy: "<<totalArbEnergy<<endl;
-+        cout<<"checkEnergy: "<<checkEnergy<<endl;
-+        cout<<"controlOverhead: "<<controlOverhead<<endl;
 +        cout<<"totalExe: "<<totalExe<<endl;
++        if(isSDNoC){
++            cout<<"Total energy: "<<totalEnergy<<endl;
++            //cout<<"Communication latency: "<<latency<<endl;
++            cout<<"Network throughput: "<< throughput<<endl;
++            cout<<"Total direct: "<< totalDirect<<endl;
++            cout<<"Total indirect: "<< totalinDirect<<endl;
++            cout<<"Contention Time: "<<blockTime<<endl;
++            cout<<"totalSmartArbEnergy: "<<totalSmartArbEnergy<<endl;
++            cout<<"totalSmartBufferEnergy: "<<totalSmartBufferEnergy<<endl;
++            cout<<"totalTransEnergy: "<<totalTransEnergy<<endl;
++            cout<<"totalBufferEnergy: "<<totalBufferEnergy<<endl;
++            cout<<"totalArbEnergy: "<<totalArbEnergy<<endl;
++            cout<<"checkEnergy: "<<checkEnergy<<endl;
++            cout<<"controlOverhead: "<<controlOverhead<<endl;
++        }
++        
 +        
 +
 +        //cout<<t[2]<<endl;
@@ -1819,20 +1822,23 @@ index 5b542bc..896610b 100644
 +            out<<"Schedule Length: " <<curTick()*totalIter<<endl;
 +            out<<"Total trasmission time: "<<transTime+blockTime<<endl;
 +            out<<"Total Flit: "<<totalFlits<<endl;
-+            out<<"Total energy: "<<totalEnergy<<endl;
-+            //out<<"Communication latency: "<< (transTime+blockTime)/appSize<<endl;
-+            out<<"Network throughput: "<< totalFlits/curTick()<<endl;
-+            out<<"Total direct: "<< totalDirect<<endl;
-+            out<<"Total indirect: "<< totalinDirect<<endl;
-+            out<<"Contention Time: "<<blockTime<<endl;
-+            out<<"totalSmartArbEnergy: "<<totalSmartArbEnergy<<endl;
-+            out<<"totalSmartBufferEnergy: "<<totalSmartBufferEnergy<<endl;
-+            out<<"totalTransEnergy: "<<totalTransEnergy<<endl;
-+            out<<"totalBufferEnergy: "<<totalBufferEnergy<<endl;
-+            out<<"totalArbEnergy: "<<totalArbEnergy<<endl;
-+            out<<"checkEnergy: "<<checkEnergy<<endl;
-+            out<<"controlOverhead: "<<controlOverhead<<endl;
 +            out<<"totalExe: "<<totalExe<<endl;
++            if(isSDNoC){
++                out<<"Total energy: "<<totalEnergy<<endl;
++                //out<<"Communication latency: "<< (transTime+blockTime)/appSize<<endl;
++                out<<"Network throughput: "<< totalFlits/curTick()<<endl;
++                out<<"Total direct: "<< totalDirect<<endl;
++                out<<"Total indirect: "<< totalinDirect<<endl;
++                out<<"Contention Time: "<<blockTime<<endl;
++                out<<"totalSmartArbEnergy: "<<totalSmartArbEnergy<<endl;
++                out<<"totalSmartBufferEnergy: "<<totalSmartBufferEnergy<<endl;
++                out<<"totalTransEnergy: "<<totalTransEnergy<<endl;
++                out<<"totalBufferEnergy: "<<totalBufferEnergy<<endl;
++                out<<"totalArbEnergy: "<<totalArbEnergy<<endl;
++                out<<"checkEnergy: "<<checkEnergy<<endl;
++                out<<"controlOverhead: "<<controlOverhead<<endl;
++            }
++            
 +            out.close();
 +        }
 +        //PrintdstMaptaks();
@@ -2098,7 +2104,7 @@ index 5b542bc..896610b 100644
  {
      int num_destinations = numDestinations;
      int radix = (int) sqrt(num_destinations);
-@@ -192,6 +1014,7 @@ GarnetSyntheticTraffic::generatePkt()
+@@ -192,6 +1020,7 @@ GarnetSyntheticTraffic::generatePkt()
      int source = id;
      int src_x = id%radix;
      int src_y = id/radix;
@@ -2106,7 +2112,7 @@ index 5b542bc..896610b 100644
  
      if (singleDest >= 0)
      {
-@@ -238,6 +1061,10 @@ GarnetSyntheticTraffic::generatePkt()
+@@ -238,6 +1067,10 @@ GarnetSyntheticTraffic::generatePkt()
          dest_y = src_y;
          destination = dest_y*radix + dest_x;
      }
@@ -2117,7 +2123,7 @@ index 5b542bc..896610b 100644
      else {
          fatal("Unknown Traffic Type: %s!\n", traffic);
      }
-@@ -298,7 +1125,7 @@ GarnetSyntheticTraffic::generatePkt()
+@@ -298,7 +1131,7 @@ GarnetSyntheticTraffic::generatePkt()
          requestType = MemCmd::ReadReq;
          flags.set(Request::INST_FETCH);
          req = std::make_shared<Request>(
@@ -2126,7 +2132,7 @@ index 5b542bc..896610b 100644
          req->setPaddr(paddr);
      } else {  // if (injReqType == 2)
          // generate packet for virtual network 2
-@@ -306,20 +1133,289 @@ GarnetSyntheticTraffic::generatePkt()
+@@ -306,20 +1139,289 @@ GarnetSyntheticTraffic::generatePkt()
          req = std::make_shared<Request>(paddr, access_size, flags, masterId);
      }
  
@@ -2176,7 +2182,8 @@ index 5b542bc..896610b 100644
 +    }
 +    if(!isSDNoC)
 +        sendPkt(pkt);
-+
+ 
+-    sendPkt(pkt);
 +}
 +
 +
@@ -2246,8 +2253,7 @@ index 5b542bc..896610b 100644
 +        cout<<"destination router error! "<<"From "<<src<<" through "<<routerNum<<nextNum<<"to"<<dst<<endl;
 +        return 5;
 +    }
- 
--    sendPkt(pkt);
++
 +    return 0;
 +}
 +// Changed here, adding candidates selection 
@@ -2421,7 +2427,7 @@ index 5b542bc..896610b 100644
  }
  
  void
-@@ -333,6 +1429,8 @@ GarnetSyntheticTraffic::initTrafficType()
+@@ -333,6 +1435,8 @@ GarnetSyntheticTraffic::initTrafficType()
      trafficStringToEnum["tornado"] = TORNADO_;
      trafficStringToEnum["transpose"] = TRANSPOSE_;
      trafficStringToEnum["uniform_random"] = UNIFORM_RANDOM_;
@@ -2430,7 +2436,7 @@ index 5b542bc..896610b 100644
  }
  
  void
-@@ -353,5 +1451,6 @@ GarnetSyntheticTraffic::printAddr(Addr a)
+@@ -353,5 +1457,6 @@ GarnetSyntheticTraffic::printAddr(Addr a)
  GarnetSyntheticTraffic *
  GarnetSyntheticTrafficParams::create()
  {
