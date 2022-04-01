@@ -8,7 +8,7 @@
 * 4. Download and install JSONcpp: https://github.com/open-source-parsers/jsoncpp#generating-amalgamated-source-and-header  
 * 5. Paste configs to gem5 folder
 * 5. Download NoC.patch file in this repo to gem5 folder.  
-* 6. Apply this patch using command: git apply NoC.patch  
+* 6. Apply this patch using command: git apply NoC1.patch  
 * 7. Compile again: scons build/Garnet_standalone/gem5.debug -j25 NUMBER_BITS_PER_SET=256  
 ---------------------------------------------------------------------------------
 ## To use this simulator:  
