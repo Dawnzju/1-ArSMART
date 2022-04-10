@@ -1,4 +1,4 @@
-# 1-Gem5-Updated   
+# ArSMART
 > This is a simulator which enables basic NoC, SMART NoC and ArSMART NoC. This simulator is developed based on gem5. The main website can be found at http://www.gem5.org.  
 ---------------------------------------------------------------------------------
 ## To install this simulator:  
